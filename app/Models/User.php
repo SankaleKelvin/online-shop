@@ -22,10 +22,13 @@ class User extends Authenticatable
      * @return array<string, string>
      */
 
-    protected $fillable =[
+    protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
+        'user_image',
+        'is_active',
+        'role_id'
     ];
 
     protected function casts(): array
@@ -33,6 +36,19 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+        ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function abilities()
+    {
+        return [
+            'admin' => $this->role?->name === 'ADMINISTRATOR',
+            'customer' => $this->role?->name === 'CUSTOMER'
         ];
     }
 }
