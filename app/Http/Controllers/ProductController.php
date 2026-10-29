@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     public function readAll(){
         try{
-            $products = Product::all();
+            $products = Product::with('category')->get();
             return response()->json([
                 'products'=>$products
             ],200);
@@ -57,7 +57,7 @@ class ProductController extends Controller
 
     public function read($id){
         try{
-            $product = Product::where('id',$id)->first();
+            $product = Product::with('category')->where('id',$id)->first();
             return response()->json([
                 'product'=>$product
             ],200);

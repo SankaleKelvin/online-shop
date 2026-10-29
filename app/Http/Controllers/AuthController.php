@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
@@ -85,5 +86,19 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json("Logout Successful");
+    }
+
+    public function userInfo(Request $request){
+        try{
+            $user = Auth::user();
+            return response()->json([
+                'user'=>$user
+            ]);
+        } catch(\Exception $e){
+            return response()->json([
+                'message'=>'Error getting user info.', 
+                'error'=>$e->getMessage()
+            ]);
+        }
     }
 }

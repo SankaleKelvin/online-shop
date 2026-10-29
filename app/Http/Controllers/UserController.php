@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function readAll(){
         try{
-            $users = User::all();
+            $users = User::with('role')->get();
             return response()->json([
                 'users'=>$users
             ], 200);
@@ -61,7 +61,7 @@ class UserController extends Controller
 
     public function read($id){
         try{
-            $user = User::where('id',$id)->first();
+            $user = User::with('role')->where('id',$id)->first();
             return response()->json([
                 'user'=>$user
             ], 200);

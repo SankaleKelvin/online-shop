@@ -23,7 +23,7 @@ Route::post('/email/resend', [ResendVerificationController::class, 'resend'])
 
 //Protected routes
 Route::middleware('auth:sanctum')->group(function () {
-
+    Route::get('me', [AuthController::class, 'userInfo']);
     Route::post('/logout-user', [AuthController::class, 'logout']);
 
     Route::post('/create-role', [RoleController::class, 'createRole']);
